@@ -37,6 +37,11 @@ body > div {
 	text-align: left;
 }
 
+#radio-buttons-answers {
+	list-style: none;
+	width: 400px;
+}
+
 .container {
 	width: 700px;
 	height: 500px;

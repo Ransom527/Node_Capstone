@@ -41,16 +41,14 @@ var State = {
 };
 
 
-//state management, use single object
-//state.Questions[i].Question
-//refactor Answer: 
-
-
 function gameStart() {
+	State.onQuestion = 0;
+	State.numberCorrect = 0;
 	renderQuestion(State.Questions[State.onQuestion]);
 	$("#question-box").removeClass('hidden');
 	$("#start").addClass('hidden');
 }
+
 
 
 function newGame() {
@@ -68,16 +66,13 @@ function newGame() {
 
 
 function renderQuestion(question) {
-	console.log(data, 'data');
-	$('#radio-buttons-answers').clear();
+	console.log(question, 'q');
+	$('#radio-buttons-answers').empty();
 	for (var i = 0; i < question.Choices.length; i++) {
-		$('#radio-buttons-answers').append("<li><input type='radio' class='selections' name='Answers' value='"+question.Choices[i]+"'>")
-		.append("<span class='answers'>" + question.Choices[i] + "</span></li>");
+		$('#radio-buttons-answers').append("<li ><input type='radio' class='selections' name='Answers' value='"+question.Choices[i]+"'> <span class='answers'>" + question.Choices[i] + "</span></li>");
 	}
-	$('#Question').val(question.Title);
-
-	//move elsewhere, next q
-	$('#on-question').text(State.onQuestion);
+	$('#Question').text(question.Title);
+	$('#on-question').text(State.onQuestion+1);
 	$('#number-correct').text(State.numberCorrect);
 }
 
@@ -86,14 +81,13 @@ function renderQuestion(question) {
 function onSubmit() {
 	event.preventDefault();
 	var choice;
-	console.log(State.Questions[State.onQuestion].Answer, $("input:radio[name='Answers']:checked").val() );
-	if(State.Questions[State.onQuestion].Answer === $("input:radio[name='Answers']:checked").text()) {
+	console.log(State.Questions[State.onQuestion].Answer, $("input:radio[name='Answers']:checked")[0].value );
+	if(State.Questions[State.onQuestion].Answer === $("input:radio[name='Answers']:checked")[0].value ) {
 		State.numberCorrect++;
 	}
 	else {
 		$('#answer-box').text(State.Questions[State.onQuestion].Answer);
 	}
-	State.onQuestion += 1;
 	$("#Submit").addClass('hidden');
 	if(State.onQuestion == State.Questions.length) {
 		gameOver();
@@ -106,21 +100,20 @@ function onSubmit() {
 	}
 }
 
-//use jquery
+
 function checkChecked(value) {
 	return document.getElementById(value).checked;
-	//Returns selected answer
 }
-
 
 
 function nextQuestion() {
 	event.preventDefault();
+	State.onQuestion++;
 	$('.selections').prop('checked', false);
 	$("#next-question").addClass('hidden');
 	$("#Submit").removeClass('hidden');
 	$("#answer-box").text('');
-	renderQuestion(State.Questions[State.onQuestion])
+	renderQuestion(State.Questions[State.onQuestion]);
 }
 
 
