@@ -5,11 +5,11 @@ const app = express();
 
 
 
-app.get('/quizdb', quizdb.get);
+//app.get('/quizdb', quizdb.get);
 
-//
 
-app.use(morgan('common'));
+
+//app.use(morgan('common'));
 
 // you need to import `blogPostsRouter` router and route
 // requests to HTTP requests to `/blog-posts` to `blogPostsRouter`
