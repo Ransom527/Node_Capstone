@@ -5,7 +5,7 @@ const app = express();
 
 
 
-//app.get('/quizdb', quizdb.get);
+app.get('/quizdb', function(req, res){});
 
 
 
