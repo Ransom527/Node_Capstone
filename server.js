@@ -5,7 +5,9 @@ const app = express();
 
 
 
-app.get('/quizdb', function(req, res){});
+app.get('/quizdb', function(req, res){
+	res.json({ msgId: 'Hello World' })
+});
 
 
 

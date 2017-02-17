@@ -14,10 +14,10 @@ describe('index page', function() {
   it('exists', function(done) {
   	console.log('CI test')
     chai.request(app)
-      .get('/')
+      .get('/quizdb')
       .end(function(err, res) {    
       	//console.log(err, res, 'end of the world')
-        //res.should.have.status(200);
+        res.should.have.status(200);
         //res.should.be.html;
         done();
     });
