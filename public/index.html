@@ -4,36 +4,41 @@
 <head>
 	<title>Interactive Gaming Quiz</title>
 	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<!-- Normailize? Google APi Font?-->
 </head>
 
 
-<body>
-<div id="upperdiv">
+<body class='container'>
+<div id="upperdiv" class="row">
 	<h1 id="title">Test Your Gaming Knowledge!</h1><br/>
 	<p id='active-username'></p>
-	</div>
+</div>
+
 
 <form id="enter-email-username" class='centered' onsubmit="submitEmail()">
       <label>Email</label>
       <!--Label for= -->
       <input type="text" id="email-username-input" placeholder="E-Mail Address">
       <button type="submit">Submit</button>
-    </form>
+</form>
 
 
 <div id='game-start-div'>
-
-	<button id='start' class='hidden start-buttons' onclick='newGame()'>Start Game</button><br/>
-	<button id='new-game' class='hidden start-buttons' onclick='newGame()'>New Game</button>
+	<button id='start' class='hidden start-buttons' onclick='newGame()'>Start Game</button>
 </div>
 
 
-<div><!-- List of quizzes, hidden by deafulkt, unhide on submission of email --></div>
+<div id="game-list-div" class="hidden panel">
+<ul id="game-list">
+	<!-- List of quizzes, hidden by deafulkt, unhide on submission of email -->
+</ul>
+</div>
+
 
 <div id="game-over-div" class="hidden">
 	<p>Game Over!</p>
+	<button type="next" id='return-to-list' onclick='loadGameList()'>Return to Game List</button>
 </div>
 
 
@@ -59,6 +64,7 @@
 
 <script src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
 </html>
