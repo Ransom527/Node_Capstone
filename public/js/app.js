@@ -1,4 +1,6 @@
 //JS Code
+
+//empty
 var State = {
 	numberCorrect: 0,
 	onQuestion: 0,
@@ -65,6 +67,7 @@ function submitEmail() {
 	State.activeUser = $('#email-username-input').val();
 	$("#active-username").text(emailID);
 	loadGameList();
+	renderGameList();
 }
 
 
@@ -82,8 +85,78 @@ function newGame(gameID) {
 	$("#game-over-div").addClass('hidden');
 }
 
+function deleteGame(gameID) {
 
-function loadGameList() {
+}
+
+
+function updateGame(gameID) {
+	$('#game-list-div').addClass('hidden');
+	$('#new-game-form-div').removeClass('hidden');
+	//hide submit button for new, unhide update button for update functionality
+}
+
+
+function submitNewGame() {
+	event.preventDefault();
+	var gameFormData = {
+		Title: '',
+		Choices: [],
+		Answer: ''
+	};
+	var inputs = $('#new-game-form-ul li');
+
+	gameFormData.Title = $('#question-text-input').val();
+	inputs.each(function(i) {
+		if (i > 0) {
+			var value = $(this).find("input[type='text']").val();
+			gameFormData.Choices.push(value);
+			console.log($(this).find("input[type='radio']:checked"))
+			if ($(this).find("input[type='radio']:checked").length > 0) {
+				gameFormData.Answer = value;
+			}
+		}
+	});
+	/*
+		for (var i = 1; i < inputs.length; i++) {
+			var value = inputs[i].find("input[type='text']").val();
+			gameFormData.Choices.push(value);
+			if ( inputs[i].find("input[type='radio']:checked") ) {
+				gameFormData.Answer = value;
+			}
+		}
+		
+	*/
+	console.log(gameFormData)
+		/*
+			$.ajax({
+				url: "/newgame",
+				data: "",
+				success: function() {
+					loadGameList();
+				}
+			});
+		*/
+		//$().
+		//Add form data to state object or send through api
+}
+
+
+
+function addOptionField() {
+	event.preventDefault();
+	$('#new-game-form-ul').append("<li class='new-game-form-class'><div><input type='radio'></div><input type='text' placeholder='Option Text'></li>");
+}
+
+
+function loadCreateGame() {
+	$('#game-list-div').addClass('hidden');
+	$("#new-game-form-div").removeClass('hidden');
+	$('#add-game').addClass('hidden');
+}
+
+//rendergamelist
+function renderGameList() {
 	event.preventDefault();
 	$('#game-list').empty();
 	$("#enter-email-username").addClass('hidden');
@@ -91,11 +164,16 @@ function loadGameList() {
 	for (var i = 0; i < State.Games.length; i++) {
 		console.log(State.Games[i].Title);
 		$('#game-list').append(
-			"<li class='row'><div class='col-md-3'>" + State.Games[i].Title + "</div><button class='btn btn-info col-md-3' onclick='newGame(" + State.Games[i].ID + ")'>Start Quiz</button><div class='col-md-3'>" + State.Games[i].highScore + "</div></li>"
+			"<li class='row game-list-li'><div class='game-title'>" + State.Games[i].Title + "</div><div class='high-score'>" + State.Games[i].highScore + "</div><button class='btn btn-info btn-xs' onclick='newGame(" + State.Games[i].ID + ")'>Start Quiz</button><button class='btn btn-info btn-xs' onclick='updateGame(" + State.Games[i].ID + ")'>Update Quiz</button><button class='btn btn-info btn-xs' onclick='deleteGame(" + State.Games[i].ID + ")'>Delete Quiz</button></li>"
 		);
 	}
 	$("#game-list-div").removeClass('hidden');
 	$("#game-over-div").addClass('hidden');
+	$("#add-game").removeClass('hidden');
+}
+
+function loadGameList() {
+	//retrieve
 }
 
 
@@ -161,3 +239,11 @@ function gameOver() {
 function checkAnswer() {
 	//
 }
+
+
+//quiz form functionality
+//assemble add quiz form data into object for submission
+//add quiz data
+//add delete
+//import to mongodb
+//

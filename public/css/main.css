@@ -25,14 +25,14 @@ body > div {
 
 #game-list-div {
 	text-align: left;
-	padding-left: 10px;
-	padding-right: 10px;
+	padding-left: 20px;
+	padding-right: 20px;
 	width: 500px;
-	height: 250px;
+	height: 350px;
 	margin-right: auto;
 	margin-left: auto;
 	margin-top: 20px;
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 	border: 2px solid black;
 }
 
@@ -40,11 +40,37 @@ body > div {
 	list-style: none;
 	margin-right: auto;
 	margin-left: auto;
+	padding-left: 0px;
 	display: block;
+}
+
+.game-list-li {
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.high-score {
+	display: inline-block;
+	width: 50px;
+	text-align: center;
+}
+
+.game-title {
+	display: inline-block;
+	width: 120px;
+	text-align: left;
 }
 
 .hidden {
 	display: none;
+}
+
+.row {
+	display: inline;
+}
+
+.btn {
+	margin-left: 10px;
 }
 
 .centered {
@@ -67,9 +93,22 @@ body > div {
 	width: 400px;
 }
 
+#new-game-form div {
+	display: inline-block;
+	width: 50px;
+}
+
+#new-game-form-ul {
+	list-style: none;
+}
+
+#new-game-form-ul > li {
+	width: 300px;
+}
+
 .container {
-	width: 700px;
-	height: 500px;
+	width: 750px;
+	height: 600px;
 	border: 2px solid black;
 	margin-left: auto;
 	margin-right: auto;

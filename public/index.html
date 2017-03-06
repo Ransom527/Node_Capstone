@@ -59,8 +59,31 @@
 	<span id='answer-box'></span><br/>
 	<span>On Question:</span><span id='on-question'></span><br/>
 	<span>Number Correct:</span><span id='number-correct'></span><br/>
+</div>
 
-	</div>
+
+<div id="new-game-form-div" class="hidden">
+	<form id="new-game-form" onsubmit="submitNewGame()">
+		<span>New Game Form</span>
+		<ul id='new-game-form-ul'>
+		<li><div></div><input type="text" name="game-name" placeholder="Name of Game"></li>
+		
+		<li><div></div><input id='question-text-input' type="text" placeholder="Question Text"></li>
+
+		<li><div><input type="radio"></div><input type="text" placeholder="Option Text"></li>
+		<li><div><input type="radio"></div><input type="text" placeholder="Option Text"></li>
+
+		</ul>
+		<button id='add-option' onclick="addOptionField()">Add Option...</button>
+		<button type="submit">Submit</button>
+	</form>
+</div>
+
+
+<div id='add-game' class="hidden">
+	<button type="next" id='add-game-button' onclick='loadCreateGame()'>Create New Game</button>
+</div>
+
 
 <script src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/app.js"></script>
