@@ -10,6 +10,6 @@ db.quizAppDB.insertOne(
 {Title: 'Gamecube',ID: '03',Score: 0,Questions: [{Title: 'What was the development codename for the Nintendo Gamecube?',Choices: ['Swordfish', 'Dolphin', 'Rhino', 'Panther'],Answer: 'Dolphin'}]}
 )
 
-db.quizAppDB.insertOne(
+db.quiz.insertOne(
 {Title: 'Super Nintendo',ID: '04',Score: 0,Questions: [{Title: 'What was name of the unreleased CD-ROM add-on for the Super Nintendo?',Choices: ['Pioneer Superdisc', 'Mega-CD', 'Nintendo Playstation', 'Nintendo CD'],Answer: 'Nintendo Playstation'}]}
 )
