@@ -8,9 +8,9 @@ mongoose.Promise = global.Promise;
 
 module.exports = {
 	list: (req, res) => {
-		//console.log(quiz);
+		//Not currently used...
 		quiz		
-			.find() //postman reqs stuck here
+			.find()
 			.exec()
 			.then(posts => {
 				res.json(posts.map(post => post.apiRepr()));

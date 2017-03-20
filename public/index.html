@@ -68,16 +68,33 @@
 		<ul id='new-game-form-ul'>
 		<li><div></div><input type="text" name="game-name" placeholder="Name of Game"></li>
 		
-		<li><div></div><input id='question-text-input' type="text" placeholder="Question Text"></li>
+		<li><div></div><input id='question-text-input' type="text" placeholder="Question"></li>
 
-		<li><div><input type="radio"></div><input type="text" placeholder="Option Text"></li>
-		<li><div><input type="radio"></div><input type="text" placeholder="Option Text"></li>
+		<li><div></div><input class='new-game-option' type="text" placeholder="Option"></li>
+		<li><div></div><input class='new-game-option' type="text" placeholder="Option"></li>
+
+		<li><div></div><input id='new-game-answer' type="text" placeholder="Answer"></li>
 
 		</ul>
 		<button id='add-option' onclick="addOptionField()">Add Option...</button>
+		<button id='add-question' onclick='addQuestion()' type="submit">Submit Game</button>
 		<button type="submit">Submit</button>
 	</form>
 </div>
+
+
+<div id="update-game-form-div" class="hidden">
+	<form id="update-game-form" onsubmit="updateGame()">
+		<span>New Game Form</span>
+		<ul id='update-game-form-ul'>
+		
+		</ul>
+		<button id='add-option' onclick="addOptionField()">Add Option...</button>
+		<button id='add-question' onclick='addQuestion()' type="submit">Submit Game</button>
+		<button type="submit">Submit</button>
+	</form>
+</div>
+
 
 
 <div id='add-game' class="hidden">

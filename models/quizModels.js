@@ -7,11 +7,13 @@ const quizSchema = mongoose.Schema({
   Questions: []
 });
 
+/*
 const quizListSchema = mongoose.Schema({
   Title: '',
   ID: '',
   Score: 0
 });
+*/
 
 quizSchema.methods.apiRepr = function(type) {
   if (type === 'list') {
