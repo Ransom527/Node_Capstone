@@ -2,13 +2,29 @@
 	box-sizing: border-box;
 }
 
+
 body > div {
 	text-align: center;
 }
 
+
+ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+li {
+	padding: 0;
+	margin: 0;
+}
+
+
 #title {
 	text-align: center;
 }
+
 
 #question-box {
 	text-align: left;
@@ -23,6 +39,7 @@ body > div {
 	border: 2px solid black;
 }
 
+
 #game-list-div {
 	text-align: left;
 	padding-left: 20px;
@@ -36,6 +53,7 @@ body > div {
 	border: 2px solid black;
 }
 
+
 #game-list {
 	list-style: none;
 	margin-right: auto;
@@ -44,10 +62,12 @@ body > div {
 	display: block;
 }
 
+
 .game-list-li {
 	box-sizing: border-box;
 	width: 100%;
 }
+
 
 .high-score {
 	display: inline-block;
@@ -55,23 +75,28 @@ body > div {
 	text-align: center;
 }
 
+
 .game-title {
 	display: inline-block;
 	width: 200px;
 	text-align: left;
 }
 
+
 .hidden {
 	display: none;
 }
+
 
 .row {
 	display: inline;
 }
 
+
 .btn {
-	margin-left: 10px;
+	margin-left: 30px;
 }
+
 
 .centered {
 	text-align: center;
@@ -79,32 +104,77 @@ body > div {
 	margin-right: auto;
 }
 
+
 #game-start-div {
 	vertical-align: top;
 	text-align: center;
 }
 
+
 #game-start-div > * {
 	text-align: left;
 }
+
 
 #radio-buttons-answers {
 	list-style: none;
 	width: 400px;
 }
 
+
 #new-game-form div {
 	display: inline-block;
 	width: 50px;
 }
 
-#new-game-form-ul {
-	list-style: none;
+
+#new-game-form-options {
+	text-align: center;
 }
 
-#new-game-form-ul > li {
-	width: 300px;
+
+#new-game-form-options li {
+	width: 100%;
+	text-align: center;
 }
+
+
+#new-game-form-options li input{
+	width: 200px;
+}
+
+
+#new-game-form-answer {
+	text-align: center;
+}
+
+
+#new-game-form-answer li {
+	width: 100%;
+	text-align: center;
+}
+
+
+#new-game-form-answer li input{
+	width: 200px;
+}
+
+
+#new-game-form-ul {
+	text-align: center;
+}
+
+
+#new-game-form-ul li {
+	width: 100%;
+	text-align: center;
+}
+
+
+#new-game-form-ul li input{
+	width: 200px;
+}
+
 
 .container {
 	width: 750px;

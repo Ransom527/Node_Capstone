@@ -64,41 +64,32 @@
 
 <div id="new-game-form-div" class="hidden">
 	<form id="new-game-form" onsubmit="submitNewGame()">
-		<span>New Game Form</span>
+		<span id='game-input-header'>Name of New Game</span><br/>
+		<span id='question-number'>Question #</span>
+		<span id='new-game-form-on-question' class='hidden'></span>
 		<ul id='new-game-form-ul'>
-		<li><div></div><input type="text" name="game-name" placeholder="Name of Game"></li>
-		
-		<li><div></div><input id='question-text-input' type="text" placeholder="Question"></li>
-
-		<li><div></div><input class='new-game-option' type="text" placeholder="Option"></li>
-		<li><div></div><input class='new-game-option' type="text" placeholder="Option"></li>
-
-		<li><div></div><input id='new-game-answer' type="text" placeholder="Answer"></li>
-
+		<li><input id='game-name' type="text" name="game-name" placeholder="Enter name for New Game"></li>
 		</ul>
-		<button id='add-option' onclick="addOptionField()">Add Option...</button>
-		<button id='add-question' onclick='addQuestion()' type="submit">Submit Game</button>
-		<button type="submit">Submit</button>
+
+		<ul id="new-game-form-question">			
+		</ul>
+
+		<ul id='new-game-form-options'>
+		</ul>
+
+		<ul id='new-game-form-answer'>
+		</ul>
+
+		<button id='game-name-entry' onclick="addGameName()">Next...</button>
+		<button id='add-option' class='hidden' onclick="addOptionField()">Add Option...</button>
+		<button id='add-question' class='hidden' onclick='addQuestion()' type="submit">Add Question</button>
+		<button id='submit-game' type="submit" class='hidden' >Submit Game</button>
 	</form>
 </div>
-
-
-<div id="update-game-form-div" class="hidden">
-	<form id="update-game-form" onsubmit="updateGame()">
-		<span>New Game Form</span>
-		<ul id='update-game-form-ul'>
-		
-		</ul>
-		<button id='add-option' onclick="addOptionField()">Add Option...</button>
-		<button id='add-question' onclick='addQuestion()' type="submit">Submit Game</button>
-		<button type="submit">Submit</button>
-	</form>
-</div>
-
 
 
 <div id='add-game' class="hidden">
-	<button type="next" id='add-game-button' onclick='loadCreateGame()'>Create New Game</button>
+	<button type="next" id='add-game-button' onclick='loadCreateGame()'>Create New Quiz</button>
 </div>
 
 

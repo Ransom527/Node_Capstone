@@ -1,8 +1,11 @@
 //JS Code
 //var apiurl = "http://127.0.0.1:8080"
+//state and DOM manipultion should be separtate
+
 
 var State = {
 	newGame: {},
+	onNewQuestion: 1,
 	numberCorrect: 0,
 	onQuestion: 0,
 	onGame: 0,
@@ -29,32 +32,47 @@ function getQuizesCallback(data) {
 }
 
 
+function loadGameList() {
+	event.preventDefault();
+	$('#game-list').empty();
+	$.get('http://127.0.0.1:8080/getquizes', getQuizesCallback);
+	for (var i = 0; i < State.Games.length; i++) {
+		console.log(State.Games[i].Title);
+		$('#game-list').append(
+			"<li class='row game-list-li'><div class='game-title'>" + State.Games[i].Title + "</div><div class='high-score'>" + State.Games[i].Score + "</div><button type='button' class='btn btn-info btn-xs' onclick='newGame(\"" + State.Games[i].ID + "\")'>Start Quiz</button><button class='btn btn-info btn-xs' onclick='deleteGame(\"" + State.Games[i].ID + "\")'>Delete Quiz</button></li>"
+		);
+	}
+	$("#game-list-div").removeClass('hidden');
+}
+
+
 function getQuizCallback(data) {
 	State.currentGame = data;
 	renderQuestion(State.currentGame.Questions[State.onQuestion]);
 }
 
 
-function updateQuizCallback(data) {
-	//
+function addQuizCallback(data) {
+	State.newGame = {};
+	State.Games.push(data);
+	renderGameList();
 }
 
 
 function deleteQuizCallback(data) {
-	//console.log(data);
-
+	//
 }
 
-
+//rendergamelist should be used just for reloading
 function renderGameList() {
+	//not needed for button click functions
 	event.preventDefault();
 	$('#game-list').empty();
 	$("#enter-email-username").addClass('hidden');
-	$("#game-list-div").removeClass('hidden');
 	for (var i = 0; i < State.Games.length; i++) {
 		console.log(State.Games[i].Title);
 		$('#game-list').append(
-			"<li class='row game-list-li'><div class='game-title'>" + State.Games[i].Title + "</div><div class='high-score'>" + State.Games[i].Score + "</div><button type='button' class='btn btn-info btn-xs' onclick='newGame(\"" + State.Games[i].ID + "\")'>Start Quiz</button><button class='btn btn-info btn-xs' onclick='updateGame(\"" + State.Games[i].ID + "\")'>Update Quiz</button><button class='btn btn-info btn-xs' onclick='deleteGame(\"" + State.Games[i].ID + "\")'>Delete Quiz</button></li>"
+			"<li class='row game-list-li'><div class='game-title'>" + State.Games[i].Title + "</div><div class='high-score'>" + State.Games[i].Score + "</div><button type='button' class='btn btn-info btn-xs' onclick='newGame(\"" + State.Games[i].ID + "\")'>Start Quiz</button><button class='btn btn-info btn-xs' onclick='deleteGame(\"" + State.Games[i].ID + "\")'>Delete Quiz</button></li>"
 		);
 	}
 	$("#game-list-div").removeClass('hidden');
@@ -62,7 +80,7 @@ function renderGameList() {
 	$("#add-game").removeClass('hidden');
 }
 
-
+// Start a New Game
 function newGame(gameID) {
 	console.log('gameID', gameID);
 	$('#game-list-div').addClass('hidden');
@@ -78,8 +96,8 @@ function newGame(gameID) {
 	$('#add-game').addClass('hidden');
 }
 
-
-function updateGame(gameID) {
+// not used
+function addGame(gameID) {
 	$('#game-list-div').addClass('hidden');
 	//$('#new-game-form-div').removeClass('hidden');
 	$('#update-game-form-div').removeClass('hidden');
@@ -90,62 +108,122 @@ function updateGame(gameID) {
 
 function deleteGame(gameID) {
 	event.preventDefault();
-	//console.log(gameID);
 	$.ajax({ url: 'http://127.0.0.1:8080/deletequiz?ID=' + gameID, type: 'DELETE'}).done(function(data) {
 		console.log('hello delete', data);
+		for (var i = 0; i < State.Games.length; i++) {
+			if (State.Games[i].ID === gameID) {
+				State.Games.splice(i, 1);
+				break;
+			}
+		}
+		renderGameList();
 	});
-
-	renderGameList();
 }
 
 
-/*
-function loadQuiz(callback) {
-	quiz = [];
-	$.get('http://127.0.0.1:8080/getquizzes', callback);
-	State.currentGame = quiz;
-}
-
-
-function updateQuiz(data, callback) {
-	quiz = $()
-	$.get('http://127.0.0.1:8080/getquizzes', data, callback);
-	State.currentGame = quiz;
-}
-*/
-
-
+//in progress
 function submitNewGame() {
 	event.preventDefault();
-	var gameFormData = {
-		Title: '',
-		Choices: [],
-		Answer: ''
-	};
-	var inputs = $('#new-game-form-ul li');
-	gameFormData.Title = $('#question-text-input').val();
+	saveQuestionToState();
+	$("#new-game-form-div").addClass('hidden');
+	$("#game-list-div").removeClass('hidden');
+	//hide form
+	//unhide list
+	//rerender list
+	//call function savequestiontostate
+	//add to array
+	//$.ajax({ type: POST, url: 'http://127.0.0.1:8080/addquiz'}).done(function(data) {
+	//	data = ''
+	//});
+}
+
+
+function saveQuestionToState() {
+	var question = {};
+	console.log($('#new-game-form-options').children());
+	question.Title = $('#question-text-input').val();
+	question.Answer = $('#new-game-answer').val();
+	question.Choices = [];
+	for (var i = 0; i < $('#new-game-form-options').children().length; i++) {
+		question.Choices.push($('#new-game-form-options').val());
+	}
+	State.newGame.Questions.push(question);
+	console.log(question);
+}
+
+
+// Add New Game
+function addGameName() {
+	event.preventDefault();
+	State.newGame = {};
+	State.newGame.Title = $('#game-name').val();
+	State.newGame.Questions = [];
+	$('#new-game-form-on-question').append(State.onNewQuestion);
+	$('#game-input-header').empty();
+	$('#game-input-header').append(State.newGame.Title);
+	//console.log(State.newGame.Title);
+	$('#game-name').addClass('hidden');
+	$("#add-question").removeClass('hidden');
+	$('#new-game-form-question').append("<li><input id='question-text-input' type='text' placeholder='Question'></li>");
+	$('#new-game-form-options').append(
+		"<li><input class='new-game-option' type='text' placeholder='Option'></li>" + 
+		"<li><input class='new-game-option' type='text' placeholder='Option'></li>"
+		);
+	$('#new-game-form-answer').append("<li><input id='new-game-answer' type='text' placeholder='Answer'></li>");
+	$("#game-name-entry").addClass('hidden');
+	$("#submit-game").removeClass('hidden');
+	$("#add-option").removeClass('hidden');
+	$("#new-game-form-on-question").removeClass('hidden');
+}
+
+
+function initQuestion() {
+	//everything the addGameName and AddQuestion have in common
+	//
+
+}
+
+
+// Add New Game
+function addQuestion() {
+	event.preventDefault();
+	State.onNewQuestion++;
+	//new function the pulls qquestion/inputs and add to state object
+	var inputs = $('#new-game-form-options li input').val();
+	console.log(inputs);
+	State.newGame.Questions = inputs;
+	$('#new-game-form-options').empty();
+	$('#new-game-form-options').append(
+		"<li><input class='new-game-option' type='text' placeholder='Option'></li>" + 
+		"<li><input class='new-game-option' type='text' placeholder='Option'></li>"
+		);
+	//"<li><input id='question-text-input' type='text' placeholder='Question'></li>"
+	//"<li><input id='new-game-answer' type='text' placeholder='Answer'></li>"
+
+/*	
 	inputs.each(function(i) {
 		if (i > 0) {
 			var value = $(this).find("input[type='text']").val();
-			gameFormData.Choices.push(value);
-			console.log($(this).find("input[type='radio']:checked"))
+			State.newGame.Choices.push(inputs);
+			//console.log($(this).find("input[type='radio']:checked"))
 			if ($(this).find("input[type='radio']:checked").length > 0) {
-				gameFormData.Answer = value;
+				State.newGame.Answer = value;
 			}
 		}
 	});
-	console.log(gameFormData)
-		//Add form data to state object or send through api
+*/
 }
 
 
-
+// Add New Game
 function addOptionField() {
 	event.preventDefault();
-	$('#new-game-form-ul').append("<li class='new-game-form-class'><div><input type='radio'></div><input type='text' placeholder='Option Text'></li>");
+	$('#new-game-form-options').append("<li><input type='text' placeholder='Option'></li>");
 }
 
 
+
+// Add New Game
 function loadCreateGame() {
 	$('#game-list-div').addClass('hidden');
 	$("#new-game-form-div").removeClass('hidden');
@@ -169,29 +247,26 @@ function onSubmit() {
 	console.log(State.currentGame);
 	event.preventDefault();
 	var choice;
-	console.log(State.Questions[State.onQuestion].Answer, $("input:radio[name='Answers']:checked")[0].value);
-	if (State.Questions[State.onQuestion].Answer === $("input:radio[name='Answers']:checked")[0].value) {
+	console.log(State.currentGame.Questions[State.onQuestion].Answer, $("input:radio[name='Answers']:checked")[0].value);
+	if (State.currentGame.Questions[State.onQuestion].Answer === $("input:radio[name='Answers']:checked")[0].value) {
 		State.numberCorrect++;
 	} else {
 		//Add Alert box that expires
-		$('#answer-box').text(State.Questions[State.onQuestion].Answer);
+		$('#answer-box').text(State.currentGame.Questions[State.onQuestion].Answer);
 	}
 	//$("#Submit").addClass('hidden');
 	//Instead of hiding, hide until selection is made
-	if (State.onQuestion + 1 >= State.Questions.length) {
+	if (State.onQuestion + 1 >= State.currentGame.Questions.length) {
 		//store the high score
-		//State.Games[State.onGame].highScore = State.numberCorrect;
 		gameOver();
 		$("#new-game").removeClass('hidden');
 		$("#question-box").addClass('hidden');
-		console.log('game over')
-			//return to list of games
+		console.log('game over');
 	} else {
-		//	$("#next-question").removeClass('hidden');
-	}
 	State.onQuestion++;
 	$('.selections').prop('checked', false);
-	renderQuestion(State.Questions[State.onQuestion]);
+	renderQuestion(State.currentGame.Questions[State.onQuestion]);
+	}
 }
 
 

@@ -60,15 +60,8 @@ app.delete('/deletequiz', (req, res) => {
 	quiz
 		.findByIdAndRemove(req.query.ID)
 		.exec()
-		//.then(() => {
-		//	console.log('responding');
-		//	var message = {
-		//		message: 'success'
-		//	};
-		//	res.send(HttpStatus.OK, message);
-		//})
 		.then(() => {
-			res.status(204).json({
+			res.status(200).json({
 				message: 'success'
 			});
 		})
@@ -80,16 +73,45 @@ app.delete('/deletequiz', (req, res) => {
 		});
 });
 
-
+/*
 app.post('/updatequiz', (req, res) => {
-	//quiz
-	//.findAndModify(req.query.ID)
-	//.exec()
-	//
+	quiz
+		.findAndModify(req.query.ID)
+		.exec()
+		.then(() => {
+			res.status(200).json({
+				message: 'success'
+			});
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({
+				error: 'something went terribly wrong'
+			});
+		});
 });
+*/
 
-
-app.post('/addquiz', quizDBrouter.post);
+app.post('/addquiz', (req, res) => {
+	// Verify required fields
+	quiz
+		.create({
+			Title: req.body.Title,
+			ID: req.body.ID,
+			Score: req.body.Score,
+			Questions: req.body.Questions
+		})
+		.exec()
+		.then(() => {
+			res.status(201).json(quiz.apiRepr().ID);
+		})
+		.catch(err => {
+			console.error(err);
+			res.status(500).json({
+				error: 'something went terribly wrong'
+			});
+		});
+});
 
 
 let server;
