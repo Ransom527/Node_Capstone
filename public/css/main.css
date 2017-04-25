@@ -63,6 +63,11 @@ li {
 }
 
 
+#new-game-form-on-question-div {
+	width: 200px;
+}
+
+
 .game-list-li {
 	box-sizing: border-box;
 	width: 100%;
@@ -124,7 +129,6 @@ li {
 
 #new-game-form div {
 	display: inline-block;
-	width: 50px;
 }
 
 
@@ -156,6 +160,11 @@ li {
 
 
 #new-game-form-answer li input{
+	width: 200px;
+}
+
+
+#new-game-form-question li input{
 	width: 200px;
 }
 

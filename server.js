@@ -13,10 +13,19 @@ const {
 } = require('./models/quizModels');
 const app = express();
 const quizDBrouter = require('./quizDBrouter');
-const HttpStatus = require('http-status-codes');
+const jsonParser = bodyParser.json();
+const urlParser = bodyParser.urlencoded({ extended: true });
+
 
 app.use(morgan('common'));
-app.use(bodyParser.json());
+app.use(jsonParser);
+app.use(urlParser);
+
+
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json({ type: 'application/*+json' }))
+//app.use(bodyParser.json());
+//app.use(bodyParser());
 
 
 mongoose.Promise = global.Promise;
@@ -26,9 +35,8 @@ app.get('/getquizes', (req, res) => {
 	quiz
 		.find()
 		.exec()
-		.then(posts => {
-			console.log(posts)
-			res.json(posts.map(post => post.apiRepr('list')));
+		.then(quizzes => {
+			res.json(quizzes.map(quiz => quiz.apiRepr('list')));
 		})
 		.catch(err => {
 			console.error(err);
@@ -92,18 +100,24 @@ app.post('/updatequiz', (req, res) => {
 });
 */
 
+
+//in progress 3/27
 app.post('/addquiz', (req, res) => {
 	// Verify required fields
+	let {Title, Score, Questions} = req.body;
+
+	console.log(Title);
+	console.log(Score);
+	console.log(Questions);
 	quiz
 		.create({
 			Title: req.body.Title,
-			ID: req.body.ID,
 			Score: req.body.Score,
 			Questions: req.body.Questions
 		})
-		.exec()
-		.then(() => {
-			res.status(201).json(quiz.apiRepr().ID);
+		.then((post) => {
+			console.log(post);
+			res.status(201).json(post.apiRepr().ID);
 		})
 		.catch(err => {
 			console.error(err);

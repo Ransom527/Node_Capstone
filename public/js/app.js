@@ -127,14 +127,16 @@ function submitNewGame() {
 	saveQuestionToState();
 	$("#new-game-form-div").addClass('hidden');
 	$("#game-list-div").removeClass('hidden');
-	//hide form
-	//unhide list
-	//rerender list
-	//call function savequestiontostate
-	//add to array
-	//$.ajax({ type: POST, url: 'http://127.0.0.1:8080/addquiz'}).done(function(data) {
-	//	data = ''
-	//});
+	console.log(State.newGame);
+	//.ajax({url:''})
+	$.post('http://127.0.0.1:8080/addquiz', {Title: State.newGame.Title, Score: 0, Questions: State.newGame.Questions}).done(function(data) {
+		//data = State.newGame;
+		console.log(data);
+		State.newGame.ID = data;
+		State.Games.push(newGame);
+		State.newGame = {};
+		renderGameList();
+	});
 }
 
 
@@ -173,7 +175,7 @@ function addGameName() {
 	$("#game-name-entry").addClass('hidden');
 	$("#submit-game").removeClass('hidden');
 	$("#add-option").removeClass('hidden');
-	$("#new-game-form-on-question").removeClass('hidden');
+	$("#new-game-form-on-question-div").removeClass('hidden');
 }
 
 
@@ -188,18 +190,27 @@ function initQuestion() {
 function addQuestion() {
 	event.preventDefault();
 	State.onNewQuestion++;
+	$('#new-game-form-on-question').empty();
+	$('#new-game-form-on-question').append(State.onNewQuestion);
+	saveQuestionToState();
 	//new function the pulls qquestion/inputs and add to state object
-	var inputs = $('#new-game-form-options li input').val();
-	console.log(inputs);
-	State.newGame.Questions = inputs;
+	//var inputs = $('#new-game-form-options li input').val();
+	//console.log(inputs);
+	//State.newGame.Questions = inputs;
+	$('#new-game-form-question').empty();
 	$('#new-game-form-options').empty();
+	$('#new-game-form-answer').empty();
+	//tried clearing value, have to rebuild
+	$('#new-game-form-question').append(
+		"<li><input id='question-text-input' type='text' placeholder='Question'></li>");
 	$('#new-game-form-options').append(
 		"<li><input class='new-game-option' type='text' placeholder='Option'></li>" + 
 		"<li><input class='new-game-option' type='text' placeholder='Option'></li>"
 		);
+	$('#new-game-form-answer').append(
+		"<li><input id='new-game-answer' type='text' placeholder='Answer'></li>");
 	//"<li><input id='question-text-input' type='text' placeholder='Question'></li>"
 	//"<li><input id='new-game-answer' type='text' placeholder='Answer'></li>"
-
 /*	
 	inputs.each(function(i) {
 		if (i > 0) {

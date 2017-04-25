@@ -65,8 +65,11 @@
 <div id="new-game-form-div" class="hidden">
 	<form id="new-game-form" onsubmit="submitNewGame()">
 		<span id='game-input-header'>Name of New Game</span><br/>
-		<span id='question-number'>Question #</span>
-		<span id='new-game-form-on-question' class='hidden'></span>
+
+		<div id='new-game-form-on-question-div' class='hidden'>
+		Question #<span id='new-game-form-on-question'></span>
+		</div>
+
 		<ul id='new-game-form-ul'>
 		<li><input id='game-name' type="text" name="game-name" placeholder="Enter name for New Game"></li>
 		</ul>
