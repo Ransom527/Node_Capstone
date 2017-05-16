@@ -20,7 +20,7 @@ const urlParser = bodyParser.urlencoded({ extended: true });
 app.use(morgan('common'));
 app.use(jsonParser);
 app.use(urlParser);
-
+app.use(express.static('public'));
 
 //app.use(bodyParser.urlencoded({ extended: true }));
 //app.use(bodyParser.json({ type: 'application/*+json' }))
@@ -36,6 +36,8 @@ app.get('/getquizes', (req, res) => {
 		.find()
 		.exec()
 		.then(quizzes => {
+			console.log("hello");
+			console.log(quizzes);
 			res.json(quizzes.map(quiz => quiz.apiRepr('list')));
 		})
 		.catch(err => {
@@ -81,10 +83,10 @@ app.delete('/deletequiz', (req, res) => {
 		});
 });
 
-/*
-app.post('/updatequiz', (req, res) => {
+
+app.post('/updatequizscore', (req, res) => {
 	quiz
-		.findAndModify(req.query.ID)
+		.findByIdAndUpdate(req.query.ID, { $set: { Score: req.body.Score } }, { new: false })
 		.exec()
 		.then(() => {
 			res.status(200).json({
@@ -98,7 +100,7 @@ app.post('/updatequiz', (req, res) => {
 			});
 		});
 });
-*/
+
 
 
 //in progress 3/27
