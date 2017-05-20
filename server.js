@@ -12,7 +12,6 @@ const {
 	quizList
 } = require('./models/quizModels');
 const app = express();
-const quizDBrouter = require('./quizDBrouter');
 const jsonParser = bodyParser.json();
 const urlParser = bodyParser.urlencoded({ extended: true });
 
@@ -21,11 +20,6 @@ app.use(morgan('common'));
 app.use(jsonParser);
 app.use(urlParser);
 app.use(express.static('public'));
-
-//app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(bodyParser.json({ type: 'application/*+json' }))
-//app.use(bodyParser.json());
-//app.use(bodyParser());
 
 
 mongoose.Promise = global.Promise;
