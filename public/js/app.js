@@ -10,8 +10,7 @@ var State = {
 	currentGame: {}
 };
 
-function submitEmail(event) {
-	event.preventDefault();
+function submitEmail() {
 	var emailID = $('#email-username-input').val();
 	State.activeUser = $('#email-username-input').val();
 	$("#active-username").text(emailID);
