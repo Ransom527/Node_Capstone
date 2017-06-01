@@ -10,7 +10,7 @@ var State = {
 	currentGame: {}
 };
 
-function submitEmail() {
+function submitEmail(event) {
 	event.preventDefault();
 	var emailID = $('#email-username-input').val();
 	State.activeUser = $('#email-username-input').val();
@@ -31,7 +31,7 @@ function getQuizCallback(data) {
 //rendergamelist should be used just for reloading
 function renderGameList() {
 	//not needed for button click functions
-	event.preventDefault();
+	//event.preventDefault();
 	$('#game-list').empty();
 	$("#enter-email-username").addClass('hidden');
 	for (var i = 0; i < State.Games.length; i++) {
